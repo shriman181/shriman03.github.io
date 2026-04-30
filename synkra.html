@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Synkra — Clinical Intelligence for Indian Healthcare</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0D0F14;
+  --ink2:#1E2230;
+  --surface:#F5F3EE;
+  --surface2:#EDEAE2;
+  --accent:#1A6BFF;
+  --accent2:#0047CC;
+  --warm:#E8432D;
+  --muted:#6B7080;
+  --border:#D8D4CA;
+  --white:#FFFFFF;
+  --serif:'Instrument Serif',Georgia,serif;
+  --sans:'DM Sans',sans-serif;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:var(--sans);background:var(--surface);color:var(--ink);overflow-x:hidden;line-height:1.6}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 5%;display:flex;align-items:center;justify-content:space-between;background:rgba(245,243,238,0.85);backdrop-filter:blur(12px);border-bottom:1px solid transparent;transition:border-color 0.3s,background 0.3s}
+nav.scrolled{border-color:var(--border);background:rgba(245,243,238,0.97)}
+.nav-logo{font-family:var(--serif);font-size:22px;color:var(--ink);letter-spacing:-0.3px}
+.nav-logo span{color:var(--accent)}
+.nav-links{display:flex;gap:32px;align-items:center}
+.nav-links a{font-size:14px;color:var(--muted);text-decoration:none;transition:color 0.2s;font-weight:400;letter-spacing:0.1px}
+.nav-links a:hover{color:var(--ink)}
+.nav-cta{background:var(--ink);color:var(--white)!important;padding:9px 20px;border-radius:6px;font-size:13px!important;font-weight:500!important;transition:background 0.2s!important}
+.nav-cta:hover{background:var(--ink2)!important}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:120px 5% 80px;position:relative;overflow:hidden}
+.hero-grid{position:absolute;inset:0;opacity:0.04;background-image:linear-gradient(var(--ink) 1px,transparent 1px),linear-gradient(90deg,var(--ink) 1px,transparent 1px);background-size:60px 60px}
+.hero-blob{position:absolute;top:-10%;right:-5%;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(26,107,255,0.08) 0%,transparent 70%);pointer-events:none}
+.hero-blob2{position:absolute;bottom:0;left:-10%;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(232,67,45,0.06) 0%,transparent 70%);pointer-events:none}
+.hero-label{font-size:12px;font-weight:500;letter-spacing:2px;color:var(--accent);text-transform:uppercase;margin-bottom:24px;opacity:0;animation:fadeUp 0.8s 0.2s forwards}
+.hero-title{font-family:var(--serif);font-size:clamp(48px,7vw,88px);line-height:1.05;color:var(--ink);margin-bottom:28px;max-width:760px;opacity:0;animation:fadeUp 0.9s 0.35s forwards;letter-spacing:-1px}
+.hero-title em{font-style:italic;color:var(--accent)}
+.hero-title .line2{display:block;font-style:italic}
+.hero-sub{font-size:18px;color:var(--muted);max-width:520px;margin-bottom:44px;line-height:1.65;font-weight:300;opacity:0;animation:fadeUp 0.9s 0.5s forwards}
+.hero-actions{display:flex;gap:16px;align-items:center;opacity:0;animation:fadeUp 0.9s 0.65s forwards}
+.btn-primary{background:var(--ink);color:var(--white);padding:14px 28px;border-radius:7px;text-decoration:none;font-size:14px;font-weight:500;transition:transform 0.2s,background 0.2s;letter-spacing:0.2px}
+.btn-primary:hover{background:var(--accent);transform:translateY(-1px)}
+.btn-ghost{color:var(--ink);padding:14px 24px;text-decoration:none;font-size:14px;font-weight:400;display:flex;align-items:center;gap:8px;transition:gap 0.2s}
+.btn-ghost:hover{gap:12px}
+.btn-ghost::after{content:'→';font-size:16px}
+.hero-scroll{position:absolute;bottom:36px;left:5%;font-size:12px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;display:flex;align-items:center;gap:10px;opacity:0;animation:fadeIn 1s 1.2s forwards}
+.hero-scroll::before{content:'';width:40px;height:1px;background:var(--border)}
+.hero-stat-row{display:flex;gap:48px;margin-top:72px;padding-top:48px;border-top:1px solid var(--border);opacity:0;animation:fadeUp 0.9s 0.8s forwards}
+.hero-stat{}
+.hero-stat-num{font-family:var(--serif);font-size:36px;color:var(--ink);letter-spacing:-1px}
+.hero-stat-num span{font-size:20px;font-style:italic}
+.hero-stat-label{font-size:13px;color:var(--muted);margin-top:4px;max-width:160px;line-height:1.4}
+
+/* PROBLEM */
+.section{padding:100px 5%}
+.section-inner{max-width:1200px;margin:0 auto}
+.eyebrow{font-size:11px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;color:var(--accent);margin-bottom:16px}
+.section-title{font-family:var(--serif);font-size:clamp(32px,4.5vw,54px);line-height:1.1;color:var(--ink);margin-bottom:20px;letter-spacing:-0.5px}
+.section-title em{font-style:italic;color:var(--warm)}
+
+.problem-layout{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;margin-top:64px}
+.problem-left{}
+.problem-desc{font-size:17px;color:var(--muted);line-height:1.7;font-weight:300;margin-bottom:32px}
+.pain-cards{display:flex;flex-direction:column;gap:16px}
+.pain-card{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:20px 24px;display:flex;gap:16px;align-items:flex-start;transition:border-color 0.2s,transform 0.2s}
+.pain-card:hover{border-color:var(--accent);transform:translateX(4px)}
+.pain-icon{width:36px;height:36px;border-radius:8px;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;margin-top:2px}
+.pain-title{font-size:15px;font-weight:500;color:var(--ink);margin-bottom:4px}
+.pain-desc{font-size:13px;color:var(--muted);line-height:1.55}
+
+.problem-right{}
+.stat-big{background:var(--ink);color:var(--white);border-radius:16px;padding:36px;margin-bottom:20px;position:relative;overflow:hidden}
+.stat-big::before{content:'';position:absolute;top:-30px;right:-30px;width:150px;height:150px;border-radius:50%;background:rgba(26,107,255,0.2)}
+.stat-big-num{font-family:var(--serif);font-size:64px;line-height:1;letter-spacing:-2px;margin-bottom:8px}
+.stat-big-label{font-size:14px;color:rgba(255,255,255,0.65);line-height:1.5;max-width:220px}
+.stat-big-source{font-size:11px;color:rgba(255,255,255,0.35);margin-top:16px;letter-spacing:0.5px}
+.stat-small-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.stat-small{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:24px;text-align:center}
+.stat-small-num{font-family:var(--serif);font-size:36px;color:var(--ink);letter-spacing:-1px}
+.stat-small-label{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.4}
+
+/* HOW IT WORKS */
+.how{background:var(--ink);color:var(--white);padding:100px 5%}
+.how-inner{max-width:1200px;margin:0 auto}
+.how .eyebrow{color:rgba(26,107,255,0.9)}
+.how .section-title{color:var(--white)}
+.how-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-top:64px}
+.how-step{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);padding:32px 28px;position:relative;transition:background 0.3s}
+.how-step:hover{background:rgba(255,255,255,0.06)}
+.how-step:first-child{border-radius:12px 0 0 12px}
+.how-step:last-child{border-radius:0 12px 12px 0}
+.step-num{font-family:var(--serif);font-size:48px;color:rgba(255,255,255,0.08);line-height:1;margin-bottom:20px;font-style:italic}
+.step-icon{font-size:24px;margin-bottom:16px}
+.step-title{font-size:16px;font-weight:500;color:var(--white);margin-bottom:10px}
+.step-desc{font-size:13px;color:rgba(255,255,255,0.5);line-height:1.6}
+.step-arrow{position:absolute;right:-14px;top:50%;transform:translateY(-50%);width:28px;height:28px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--white);z-index:2}
+.how-step:last-child .step-arrow{display:none}
+
+/* FEATURES */
+.features{padding:100px 5%}
+.features-inner{max-width:1200px;margin:0 auto}
+.features-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:64px}
+.feature-card{border:1px solid var(--border);border-radius:14px;padding:36px;background:var(--white);position:relative;overflow:hidden;transition:border-color 0.3s,transform 0.3s}
+.feature-card:hover{border-color:var(--accent);transform:translateY(-4px)}
+.feature-card.featured{background:var(--ink);border-color:var(--ink);color:var(--white)}
+.feature-card.featured .feature-title{color:var(--white)}
+.feature-card.featured .feature-desc{color:rgba(255,255,255,0.55)}
+.feature-card.featured .feature-tag{background:rgba(26,107,255,0.25);color:rgba(26,107,255,0.9)}
+.feature-card::after{content:'';position:absolute;bottom:-40px;right:-40px;width:120px;height:120px;border-radius:50%;background:rgba(26,107,255,0.04)}
+.feature-card.featured::after{background:rgba(26,107,255,0.15)}
+.feature-tag{display:inline-block;font-size:10px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);background:rgba(26,107,255,0.08);padding:4px 10px;border-radius:4px;margin-bottom:16px}
+.feature-icon{font-size:28px;margin-bottom:16px}
+.feature-title{font-size:20px;font-weight:500;color:var(--ink);margin-bottom:10px;line-height:1.3}
+.feature-desc{font-size:14px;color:var(--muted);line-height:1.65}
+.feature-list{margin-top:20px;display:flex;flex-direction:column;gap:8px}
+.feature-list li{font-size:13px;color:var(--muted);list-style:none;display:flex;gap:8px;align-items:baseline}
+.feature-card.featured .feature-list li{color:rgba(255,255,255,0.6)}
+.feature-list li::before{content:'·';color:var(--accent);font-size:18px;line-height:0.8;flex-shrink:0}
+
+/* IMPACT */
+.impact{background:var(--surface2);padding:100px 5%}
+.impact-inner{max-width:1200px;margin:0 auto}
+.impact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:64px}
+.impact-card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:36px 32px;text-align:left}
+.impact-num{font-family:var(--serif);font-size:52px;color:var(--ink);letter-spacing:-2px;line-height:1}
+.impact-num span{font-size:28px}
+.impact-label{font-size:14px;color:var(--muted);margin-top:8px;line-height:1.5}
+.impact-source{font-size:11px;color:var(--border);margin-top:16px;letter-spacing:0.5px;border-top:1px solid var(--border);padding-top:12px}
+.impact-desc-block{margin-top:48px;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.impact-desc{font-family:var(--serif);font-size:28px;line-height:1.4;color:var(--ink);letter-spacing:-0.3px}
+.impact-desc em{font-style:italic;color:var(--warm)}
+.impact-body{font-size:15px;color:var(--muted);line-height:1.7;font-weight:300}
+
+/* TPA MOAT */
+.moat-section{padding:100px 5%;background:var(--white)}
+.moat-inner{max-width:1200px;margin:0 auto}
+.moat-layout{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;margin-top:64px}
+.moat-desc{font-size:17px;color:var(--muted);line-height:1.7;font-weight:300;margin-bottom:32px}
+.moat-pill-row{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:32px}
+.moat-pill{background:var(--surface);border:1px solid var(--border);border-radius:99px;padding:8px 16px;font-size:13px;color:var(--ink);font-weight:400}
+.moat-table{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+.moat-table-head{background:var(--ink);color:var(--white);display:grid;grid-template-columns:1fr 2fr;padding:14px 20px;font-size:11px;font-weight:500;letter-spacing:1px;text-transform:uppercase}
+.moat-row{display:grid;grid-template-columns:1fr 2fr;padding:16px 20px;border-bottom:1px solid var(--border);transition:background 0.2s;align-items:start}
+.moat-row:last-child{border-bottom:none}
+.moat-row:hover{background:var(--white)}
+.moat-tpa{font-size:13px;font-weight:500;color:var(--ink)}
+.moat-insight{font-size:12px;color:var(--muted);line-height:1.5}
+.insight-badge{display:inline-block;font-size:10px;padding:2px 8px;border-radius:4px;margin-bottom:4px;font-weight:500}
+.badge-warn{background:#FEF3C7;color:#92400E}
+.badge-ok{background:#D1FAE5;color:#065F46}
+.badge-blue{background:#DBEAFE;color:#1E40AF}
+
+/* FOUNDER */
+.founder{background:var(--surface);padding:100px 5%}
+.founder-inner{max-width:1200px;margin:0 auto}
+.founder-card{background:var(--white);border:1px solid var(--border);border-radius:20px;padding:56px;display:grid;grid-template-columns:auto 1fr;gap:56px;align-items:start;max-width:900px}
+.founder-avatar{width:100px;height:100px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:36px;color:var(--white);flex-shrink:0;font-style:italic}
+.founder-name{font-family:var(--serif);font-size:28px;color:var(--ink);letter-spacing:-0.5px;margin-bottom:4px}
+.founder-role{font-size:13px;color:var(--accent);font-weight:500;letter-spacing:1px;text-transform:uppercase;margin-bottom:20px}
+.founder-bio{font-size:15px;color:var(--muted);line-height:1.7;font-weight:300;margin-bottom:24px}
+.founder-links{display:flex;gap:16px}
+.founder-link{font-size:13px;color:var(--ink);text-decoration:none;display:flex;align-items:center;gap:6px;border:1px solid var(--border);padding:8px 16px;border-radius:6px;transition:border-color 0.2s,background 0.2s}
+.founder-link:hover{border-color:var(--ink);background:var(--surface)}
+
+/* FOOTER */
+footer{background:var(--ink);color:rgba(255,255,255,0.4);padding:48px 5%;display:flex;justify-content:space-between;align-items:center;flex-wrap:gap}
+.footer-logo{font-family:var(--serif);font-size:18px;color:var(--white)}
+.footer-logo span{color:var(--accent)}
+.footer-links{display:flex;gap:24px}
+.footer-links a{font-size:12px;color:rgba(255,255,255,0.4);text-decoration:none;transition:color 0.2s}
+.footer-links a:hover{color:rgba(255,255,255,0.8)}
+.footer-copy{font-size:12px}
+
+/* CTA BAND */
+.cta-band{background:var(--accent);padding:80px 5%;text-align:center}
+.cta-band h2{font-family:var(--serif);font-size:clamp(28px,4vw,48px);color:var(--white);margin-bottom:16px;letter-spacing:-0.5px}
+.cta-band p{font-size:16px;color:rgba(255,255,255,0.75);margin-bottom:36px;font-weight:300}
+.cta-band-actions{display:flex;gap:16px;justify-content:center;align-items:center}
+.btn-white{background:var(--white);color:var(--accent);padding:14px 28px;border-radius:7px;text-decoration:none;font-size:14px;font-weight:500;transition:transform 0.2s}
+.btn-white:hover{transform:translateY(-2px)}
+.btn-ghost-white{color:rgba(255,255,255,0.8);padding:14px 24px;text-decoration:none;font-size:14px;border:1px solid rgba(255,255,255,0.3);border-radius:7px;transition:border-color 0.2s}
+.btn-ghost-white:hover{border-color:rgba(255,255,255,0.7);color:var(--white)}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.reveal{opacity:0;transform:translateY(30px);transition:opacity 0.7s,transform 0.7s}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* TICKER */
+.ticker-wrap{background:var(--accent);padding:10px 0;overflow:hidden;white-space:nowrap}
+.ticker{display:inline-block;animation:ticker 30s linear infinite}
+.ticker span{font-size:12px;color:rgba(255,255,255,0.85);font-weight:400;letter-spacing:0.5px;padding:0 40px}
+.ticker span::after{content:'·';margin-left:40px;color:rgba(255,255,255,0.4)}
+@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .problem-layout,.features-grid,.impact-grid,.impact-desc-block,.moat-layout,.how-steps,.founder-card{grid-template-columns:1fr}
+  .stat-small-row{grid-template-columns:1fr 1fr}
+  .hero-stat-row{flex-wrap:wrap;gap:24px}
+  .how-step{border-radius:12px!important}
+  .how-step .step-arrow{display:none}
+  .nav-links a:not(.nav-cta){display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-logo">Synkra<span>.</span></div>
+  <div class="nav-links">
+    <a href="#problem">Problem</a>
+    <a href="#how">How it works</a>
+    <a href="#features">Features</a>
+    <a href="#impact">Impact</a>
+    <a href="#founder">Team</a>
+    <a href="#contact" class="nav-cta">Request Demo</a>
+  </div>
+</nav>
+
+<!-- TICKER -->
+<div class="ticker-wrap" style="margin-top:0;padding-top:72px">
+  <div class="ticker">
+    <span>AI-powered clinical documentation</span>
+    <span>TPA claim intelligence</span>
+    <span>Ambient documentation at bedside</span>
+    <span>Discharge summary automation</span>
+    <span>Real-time rejection prevention</span>
+    <span>EHR & HMS integration</span>
+    <span>AI-powered clinical documentation</span>
+    <span>TPA claim intelligence</span>
+    <span>Ambient documentation at bedside</span>
+    <span>Discharge summary automation</span>
+    <span>Real-time rejection prevention</span>
+    <span>EHR & HMS integration</span>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-blob"></div>
+  <div class="hero-blob2"></div>
+  <div class="hero-label">Clinical Intelligence Platform</div>
+  <h1 class="hero-title">
+    Less paperwork.<br>
+    <span class="line2">More medicine.</span>
+  </h1>
+  <p class="hero-sub">Synkra is an AI documentation co-pilot for Indian private hospitals — automating clinical notes, discharge summaries, and TPA claim forms so doctors can focus on patients, not paperwork.</p>
+  <div class="hero-actions">
+    <a href="#contact" class="btn-primary">Request a Demo</a>
+    <a href="#how" class="btn-ghost">See how it works</a>
+  </div>
+  <div class="hero-scroll">Scroll to explore</div>
+  <div class="hero-stat-row">
+    <div class="hero-stat">
+      <div class="hero-stat-num">40,000<span>+</span></div>
+      <div class="hero-stat-label">private hospitals in India without intelligent documentation tools</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">35<span>%</span></div>
+      <div class="hero-stat-label">of a doctor's time spent on administrative paperwork</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">₹18K<span>cr</span></div>
+      <div class="hero-stat-label">in insurance claims processed annually through Indian TPAs</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="section" id="problem">
+  <div class="section-inner">
+    <div class="eyebrow">The Problem</div>
+    <h2 class="section-title">Indian hospitals run on<br><em>manual everything</em></h2>
+    <div class="problem-layout">
+      <div class="problem-left">
+        <p class="problem-desc">Mid-tier Indian private hospitals — the 50 to 300-bed facilities that serve the majority of insured patients — have no intelligent layer above their HMS. Doctors spend nearly half their shift on forms, notes, and claim paperwork that machines should handle.</p>
+        <div class="pain-cards">
+          <div class="pain-card">
+            <div class="pain-icon">📋</div>
+            <div>
+              <div class="pain-title">Discharge summaries written by hand</div>
+              <div class="pain-desc">Ward boys or junior residents manually type discharge summaries from doctor dictations — slow, error-prone, and legally risky.</div>
+            </div>
+          </div>
+          <div class="pain-card">
+            <div class="pain-icon">🏥</div>
+            <div>
+              <div class="pain-title">30+ TPA formats, zero automation</div>
+              <div class="pain-desc">Each insurer has its own claim form structure. Hospitals fill these out manually, guessing which fields each TPA's auditors scrutinize.</div>
+            </div>
+          </div>
+          <div class="pain-card">
+            <div class="pain-icon">❌</div>
+            <div>
+              <div class="pain-title">15–20% claim rejection rates</div>
+              <div class="pain-desc">Rejected claims mean delayed revenue, re-submission cycles, and patients stuck waiting at discharge counters. Most rejections are preventable coding errors.</div>
+            </div>
+          </div>
+          <div class="pain-card">
+            <div class="pain-icon">🔥</div>
+            <div>
+              <div class="pain-title">Doctor burnout from administrative load</div>
+              <div class="pain-desc">In a country with a 1:1700 doctor-to-patient ratio, every minute spent on paperwork is a minute not spent on clinical care.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="problem-right">
+        <div class="stat-big">
+          <div class="stat-big-num">1:1,700</div>
+          <div class="stat-big-label">Doctor-to-patient ratio in India. The most critical bottleneck is time — not talent.</div>
+          <div class="stat-big-source">SOURCE · WHO GLOBAL HEALTH OBSERVATORY, 2023</div>
+        </div>
+        <div class="stat-small-row">
+          <div class="stat-small">
+            <div class="stat-small-num">₹2.4L<span style="font-size:18px">cr</span></div>
+            <div class="stat-small-label">Indian health insurance market size (2024)</div>
+          </div>
+          <div class="stat-small">
+            <div class="stat-small-num">22%</div>
+            <div class="stat-small-label">YoY growth in health insurance penetration</div>
+          </div>
+          <div class="stat-small">
+            <div class="stat-small-num">4.8<span style="font-size:18px">hr</span></div>
+            <div class="stat-small-label">Average daily time lost per doctor to non-clinical work</div>
+          </div>
+          <div class="stat-small">
+            <div class="stat-small-num">68%</div>
+            <div class="stat-small-label">Of claim rejections caused by documentation errors</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how" id="how">
+  <div class="how-inner">
+    <div class="eyebrow">How It Works</div>
+    <h2 class="section-title">From bedside conversation<br>to approved claim — automated</h2>
+    <div class="how-steps">
+      <div class="how-step">
+        <div class="step-num">01</div>
+        <div class="step-icon">🎙</div>
+        <div class="step-title">Ambient listening</div>
+        <div class="step-desc">The doctor activates Synkra on a bedside tablet. The AI listens to the consultation with patient consent, capturing clinical context in real time.</div>
+        <div class="step-arrow">→</div>
+      </div>
+      <div class="how-step">
+        <div class="step-num">02</div>
+        <div class="step-icon">🧠</div>
+        <div class="step-title">AI drafts the full stack</div>
+        <div class="step-desc">Synkra generates the clinical note, discharge summary, and the correct TPA claim form — pre-filled with coded diagnoses, investigations, and line items.</div>
+        <div class="step-arrow">→</div>
+      </div>
+      <div class="how-step">
+        <div class="step-num">03</div>
+        <div class="step-icon">✅</div>
+        <div class="step-title">Doctor reviews in 90 seconds</div>
+        <div class="step-desc">The doctor reads, makes any corrections, and signs off digitally. No typing. No dictation. No follow-up with admin staff.</div>
+        <div class="step-arrow">→</div>
+      </div>
+      <div class="how-step">
+        <div class="step-num">04</div>
+        <div class="step-icon">📤</div>
+        <div class="step-title">Clean claim submitted</div>
+        <div class="step-desc">Synkra validates the claim against each TPA's known rejection patterns before submission — flagging issues before the insurer ever sees them.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <div class="features-inner">
+    <div class="eyebrow">Platform Features</div>
+    <h2 class="section-title">Everything a hospital needs.<br>Nothing it doesn't.</h2>
+    <div class="features-grid">
+      <div class="feature-card featured">
+        <div class="feature-tag">Core Intelligence</div>
+        <div class="feature-icon">🧬</div>
+        <div class="feature-title">TPA Rejection Intelligence Engine</div>
+        <div class="feature-desc">Our proprietary model learns from every rejected claim in the network — building the most accurate, real-time map of what each insurer's auditors flag.</div>
+        <ul class="feature-list">
+          <li>30+ TPA-specific claim templates</li>
+          <li>Real-time rejection risk scoring before submission</li>
+          <li>ICD-10 diagnosis re-coding suggestions</li>
+          <li>Required document checklist per insurer</li>
+        </ul>
+      </div>
+      <div class="feature-card">
+        <div class="feature-tag">Documentation</div>
+        <div class="feature-icon">📝</div>
+        <div class="feature-title">Ambient Clinical Documentation</div>
+        <div class="feature-desc">Converts doctor-patient conversations into structured clinical notes using a medical-grade speech model fine-tuned for Indian accents and terminology.</div>
+        <ul class="feature-list">
+          <li>SOAP note auto-generation</li>
+          <li>Hinglish and regional accent support</li>
+          <li>Discharge summary in under 2 minutes</li>
+        </ul>
+      </div>
+      <div class="feature-card">
+        <div class="feature-tag">Integrations</div>
+        <div class="feature-icon">🔌</div>
+        <div class="feature-title">HMS & EHR Connectors</div>
+        <div class="feature-desc">Synkra plugs into existing hospital management software — no rip-and-replace, no new infrastructure required.</div>
+        <ul class="feature-list">
+          <li>Insta HMS, eHospital, CliniQ, Practo</li>
+          <li>ABDM-compliant data pipelines</li>
+          <li>HL7 FHIR ready</li>
+        </ul>
+      </div>
+      <div class="feature-card">
+        <div class="feature-tag">Analytics</div>
+        <div class="feature-icon">📊</div>
+        <div class="feature-title">Claims Performance Dashboard</div>
+        <div class="feature-desc">Hospital administrators get a live view of claim approval rates, rejection reasons, and revenue recovery metrics — by department, by doctor, by insurer.</div>
+        <ul class="feature-list">
+          <li>Real-time approval tracking</li>
+          <li>Department-level benchmarking</li>
+          <li>Monthly revenue recovery reports</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- IMPACT / MARKET -->
+<section class="impact" id="impact">
+  <div class="impact-inner">
+    <div class="eyebrow">Market Opportunity</div>
+    <h2 class="section-title">A problem at national scale.<br>A solution built for it.</h2>
+    <div class="impact-grid">
+      <div class="impact-card">
+        <div class="impact-num">40K<span>+</span></div>
+        <div class="impact-label">Private hospitals in India in the 50–300 bed segment — the most underpenetrated by enterprise software</div>
+        <div class="impact-source">NHA HEALTH DYNAMICS OF INDIA, 2022</div>
+      </div>
+      <div class="impact-card">
+        <div class="impact-num">₹18K<span>cr</span></div>
+        <div class="impact-label">TPA-processed insurance claims annually — of which ~₹3,600cr is lost to preventable documentation rejections</div>
+        <div class="impact-source">IRDAI ANNUAL REPORT, 2023–24</div>
+      </div>
+      <div class="impact-card">
+        <div class="impact-num">530M<span>+</span></div>
+        <div class="impact-label">Indians covered under health insurance (government + private) — a base that doubled in 5 years and is still growing at 22% YoY</div>
+        <div class="impact-source">GIC RE + IRDAI DATA, 2024</div>
+      </div>
+    </div>
+    <div class="impact-desc-block">
+      <div class="impact-desc">Enterprise players don't serve this segment. <em>We do.</em></div>
+      <div class="impact-body">Coupa, 3M HIS, and Nuance are built for Fortune 500 hospital chains with $500K implementation budgets and 18-month rollout timelines. The 40,000 mid-tier private hospitals that serve the majority of India's insured population have been completely ignored. Synkra is purpose-built for this gap — lightweight, affordable, and deployable in days.</div>
+    </div>
+  </div>
+</section>
+
+<!-- TPA MOAT -->
+<section class="moat-section">
+  <div class="moat-inner">
+    <div class="eyebrow">The Intelligence Moat</div>
+    <h2 class="section-title">The data network no one<br>else can replicate</h2>
+    <div class="moat-layout">
+      <div>
+        <p class="moat-desc">Every rejected claim that enters Synkra is tagged, analyzed, and fed back into our model. Over time, Synkra becomes the only system that knows exactly how each TPA's auditors think — which codes they flag, which attachments they require, which field placements they reject on technical grounds.</p>
+        <p class="moat-desc">This data doesn't exist anywhere else. It has to be earned — one claim at a time. The more hospitals on the network, the smarter the engine gets. The smarter it gets, the harder it is for anyone else to catch up.</p>
+        <div class="moat-pill-row">
+          <span class="moat-pill">Medi Assist</span>
+          <span class="moat-pill">Health India TPA</span>
+          <span class="moat-pill">FHPL</span>
+          <span class="moat-pill">MD India</span>
+          <span class="moat-pill">Paramount Health</span>
+          <span class="moat-pill">Raksha TPA</span>
+          <span class="moat-pill">Vidal Health</span>
+          <span class="moat-pill">+ 23 more</span>
+        </div>
+      </div>
+      <div class="moat-table">
+        <div class="moat-table-head">
+          <span>TPA</span>
+          <span>What Synkra knows</span>
+        </div>
+        <div class="moat-row">
+          <div class="moat-tpa">Medi Assist</div>
+          <div>
+            <div><span class="insight-badge badge-warn">Coding</span></div>
+            <div class="moat-insight">"Acute gastroenteritis" triggers audit. Recode to "gastritis with dehydration" + attach day-3 CBC, not day-1.</div>
+          </div>
+        </div>
+        <div class="moat-row">
+          <div class="moat-tpa">Health India</div>
+          <div>
+            <div><span class="insight-badge badge-blue">Document order</span></div>
+            <div class="moat-insight">Laparoscopic procedures need surgeon certification as page 2 — uploading as page 4 delays processing by 11 days.</div>
+          </div>
+        </div>
+        <div class="moat-row">
+          <div class="moat-tpa">FHPL</div>
+          <div>
+            <div><span class="insight-badge badge-warn">Field placement</span></div>
+            <div class="moat-insight">Pre-auth approval number in remarks column triggers rejection. Must appear in field 7B only.</div>
+          </div>
+        </div>
+        <div class="moat-row">
+          <div class="moat-tpa">MD India</div>
+          <div>
+            <div><span class="insight-badge badge-ok">Timing</span></div>
+            <div class="moat-insight">Implant invoices older than 48hrs from surgery date auto-flag for manual audit. Upload within the window.</div>
+          </div>
+        </div>
+        <div class="moat-row">
+          <div class="moat-tpa">Paramount</div>
+          <div>
+            <div><span class="insight-badge badge-blue">ICD coding</span></div>
+            <div class="moat-insight">Hypertension claims require co-morbidity documentation even when not primary diagnosis. Omitting it adds 7-day review cycle.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BAND -->
+<section class="cta-band" id="contact">
+  <h2>Ready to recover what's yours?</h2>
+  <p>See how much revenue your hospital is leaving on the table. We run a free 30-day claims audit — no commitment required.</p>
+  <div class="cta-band-actions">
+    <a href="mailto:hello@synkra.in" class="btn-white">Request a Demo</a>
+    <a href="mailto:hello@synkra.in" class="btn-ghost-white">Talk to the team</a>
+  </div>
+</section>
+
+<!-- FOUNDER -->
+<section class="founder" id="founder">
+  <div class="founder-inner">
+    <div class="eyebrow">The Team</div>
+    <h2 class="section-title" style="margin-bottom:48px">Built by people who<br>understand the problem</h2>
+    <div class="founder-card">
+      <div class="founder-avatar">F</div>
+      <div>
+        <div class="founder-name">[Founder Name]</div>
+        <div class="founder-role">Founder & CEO</div>
+        <p class="founder-bio">Background in healthcare operations and enterprise software. Spent years working alongside hospital administrators and insurance teams before founding Synkra — watching first-hand as preventable documentation errors eroded margins and delayed patient care. Synkra is built on the conviction that India's healthcare system doesn't need more doctors; it needs more time for the ones it has.</p>
+        <div class="founder-links">
+          <a href="#" class="founder-link">LinkedIn ↗</a>
+          <a href="mailto:hello@synkra.in" class="founder-link">hello@synkra.in</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Synkra<span>.</span></div>
+  <div class="footer-links">
+    <a href="#problem">Problem</a>
+    <a href="#how">Platform</a>
+    <a href="#impact">Market</a>
+    <a href="#founder">Team</a>
+    <a href="mailto:hello@synkra.in">Contact</a>
+  </div>
+  <div class="footer-copy">© 2025 Synkra Technologies Pvt. Ltd. · Mumbai, India</div>
+</footer>
+
+<script>
+// Nav scroll effect
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 40);
+});
+
+// Reveal on scroll
+const reveals = document.querySelectorAll('.pain-card, .stat-big, .stat-small, .how-step, .feature-card, .impact-card, .moat-row, .founder-card');
+reveals.forEach(el => el.classList.add('reveal'));
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), 80 * Array.from(reveals).indexOf(e.target) % 4);
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1 });
+reveals.forEach(el => observer.observe(el));
+
+// Animated counters
+function animateCounter(el, target, suffix='', duration=1800) {
+  let start = 0;
+  const step = target / (duration / 16);
+  const timer = setInterval(() => {
+    start += step;
+    if (start >= target) { start = target; clearInterval(timer); }
+    el.textContent = Math.floor(start).toLocaleString('en-IN') + suffix;
+  }, 16);
+}
+
+const counterObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const el = e.target;
+      const val = el.dataset.val;
+      const suffix = el.dataset.suffix || '';
+      animateCounter(el, parseFloat(val), suffix);
+      counterObs.unobserve(el);
+    }
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('[data-val]').forEach(el => counterObs.observe(el));
+</script>
+</body>
+</html>
